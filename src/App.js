@@ -4,11 +4,12 @@ import theme from "./theme";
 import Sidebar from "./components/Sidebar";
 import Button from "./components/Button";
 import Counter from "./components/Counter";
+import LoginForm from "./components/LoginForm";
 import "./App.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const components = ["Button", "Counter"];
+  const components = ["Button", "Counter", "LoginForm"];
 
   const handleSelectComponent = (component) => {
     console.log("Selected component:", component);
@@ -18,6 +19,7 @@ function App() {
   const componentMap = {
     Button: <Button />,
     Counter: <Counter />,
+    LoginForm: <LoginForm />,
   };
 
   return (
