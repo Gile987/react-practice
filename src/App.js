@@ -4,6 +4,7 @@ import theme from "./theme";
 import Sidebar from "./components/Sidebar";
 import Button from "./components/Button";
 import Counter from "./components/Counter";
+import "./App.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState(null);
