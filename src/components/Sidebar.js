@@ -8,6 +8,7 @@ const SidebarWrapper = styled('div')({
 });
 
 const ComponentItem = styled('li')({
+  listStyle: 'none',
   marginBottom: '10px',
 });
 
