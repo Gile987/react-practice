@@ -5,11 +5,12 @@ import Sidebar from "./components/Sidebar";
 import Button from "./components/Button";
 import Counter from "./components/Counter";
 import LoginForm from "./components/LoginForm";
+import TodoList from "./components/TodoList";
 import "./App.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const components = ["Button", "Counter", "LoginForm"];
+  const components = ["Button", "Counter", "LoginForm", "TodoList"];
 
   const handleSelectComponent = (component) => {
     console.log("Selected component:", component);
@@ -20,6 +21,7 @@ function App() {
     Button: <Button />,
     Counter: <Counter />,
     LoginForm: <LoginForm />,
+    TodoList: <TodoList />,
   };
 
   return (
