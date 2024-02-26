@@ -19,6 +19,9 @@ const Button = styled('button')({
   padding: '0',
   width: '100%',
   textAlign: 'left',
+  '&:hover': {
+    backgroundColor: '#e0e0e0',
+  },
 });
 
 function Sidebar({ components, onSelectComponent }) {
