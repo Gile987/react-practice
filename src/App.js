@@ -8,11 +8,12 @@ import LoginForm from "./components/LoginForm";
 import TodoList from "./components/TodoList";
 import Timer from "./components/Timer";
 import Tabs from "./components/Tabs";
+import ImageGallery from "./components/ImageGallery";
 import "./App.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const components = ["Button", "Counter", "LoginForm", "TodoList", "Timer", "Tabs"];
+  const components = ["Button", "Counter", "LoginForm", "TodoList", "Timer", "Tabs", "ImageGallery"];
 
   const handleSelectComponent = (component) => {
     console.log("Selected component:", component);
@@ -26,6 +27,7 @@ function App() {
     TodoList: <TodoList />,
     Timer: <Timer />,
     Tabs: <Tabs />,
+    ImageGallery: <ImageGallery />,
   };
 
   return (
