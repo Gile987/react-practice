@@ -2,31 +2,38 @@ import { useState, useRef, useEffect } from "react";
 
 const Timer = () => {
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
+  const [isRunning, setIsRunning] = useState(false);
   const intervalRef = useRef();
 
   const startTimer = () => {
-    intervalRef.current = setInterval(() => {
-      setTime(prevTime => {
-        let newSeconds = prevTime.seconds + 1;
-        let newMinutes = prevTime.minutes;
+    if (!isRunning) {
+      setIsRunning(true);
 
-        if (newSeconds >= 60) {
-          newSeconds = 0;
-          newMinutes += 1;
-        }
+      intervalRef.current = setInterval(() => {
+        setTime((prevTime) => {
+          let newSeconds = prevTime.seconds + 1;
+          let newMinutes = prevTime.minutes;
 
-        return { minutes: newMinutes, seconds: newSeconds };
-      });
-    }, 10);
+          if (newSeconds >= 60) {
+            newSeconds = 0;
+            newMinutes += 1;
+          }
+
+          return { minutes: newMinutes, seconds: newSeconds };
+        });
+      }, 10);
+    }
   };
 
   const stopTimer = () => {
     clearInterval(intervalRef.current);
+    setIsRunning(false);
   };
 
   const resetTimer = () => {
     clearInterval(intervalRef.current);
     setTime({ minutes: 0, seconds: 0 });
+    setIsRunning(false);
   };
 
   const cleanup = () => {
@@ -46,7 +53,7 @@ const Timer = () => {
       <p>
         {formattedMinutes}:{formattedSeconds}
       </p>
-      <button onClick={startTimer}>Start</button>
+      <button onClick={startTimer} disabled={isRunning}>Start</button>
       <button onClick={stopTimer}>Stop</button>
       <button onClick={resetTimer}>Reset</button>
     </div>
