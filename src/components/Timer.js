@@ -1,19 +1,28 @@
-import { useState, useEffect } from "react";
+import { useState, useRef } from "react";
 
 const Timer = () => {
   const [time, setTime] = useState({ minutes: 0, seconds: 0 });
+  const intervalRef = useRef();
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setTime((prevTime) => {
-        const newSeconds = prevTime.seconds + 1;
-        const newMinutes = prevTime.minutes + (newSeconds >= 60 ? 1 : 0);
-        return { minutes: newMinutes % 60, seconds: newSeconds % 60 };
+  const startTimer = () => {
+    intervalRef.current = setInterval(() => {
+      setTime(prevTime => {
+        let newSeconds = prevTime.seconds + 1;
+        let newMinutes = prevTime.minutes;
+
+        if (newSeconds >= 60) {
+          newSeconds = 0;
+          newMinutes += 1;
+        }
+
+        return { minutes: newMinutes, seconds: newSeconds };
       });
-    }, 10);
+    }, 1000);
+  };
 
-    return () => clearInterval(intervalId);
-  }, []);
+  const stopTimer = () => {
+    clearInterval(intervalRef.current);
+  };
 
   const formattedMinutes = String(time.minutes).padStart(2, "0");
   const formattedSeconds = String(time.seconds).padStart(2, "0");
@@ -24,6 +33,8 @@ const Timer = () => {
       <p>
         {formattedMinutes}:{formattedSeconds}
       </p>
+      <button onClick={startTimer}>Start</button>
+      <button onClick={stopTimer}>Stop</button>
     </div>
   );
 };
