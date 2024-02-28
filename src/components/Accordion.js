@@ -27,8 +27,9 @@ const Accordion = () => {
   const toggleAccordion = useCallback((index) => {
     setActiveIndex(activeIndex === index ? null : index);
   }, [activeIndex]);
-  
+
   The function will only be re-created when the activeIndex changes.
+  P.s. useCallback is not necessary in this case, but it's good to know about it.
   */
 
   const toggleAccordion = (index) => {
