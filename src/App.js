@@ -9,11 +9,21 @@ import TodoList from "./components/TodoList";
 import Timer from "./components/Timer";
 import Tabs from "./components/Tabs";
 import ImageGallery from "./components/ImageGallery";
+import Dropdown from "./components/Dropdown";
 import "./App.css";
 
 function App() {
   const [selectedComponent, setSelectedComponent] = useState(null);
-  const components = ["Button", "Counter", "LoginForm", "TodoList", "Timer", "Tabs", "ImageGallery"];
+  const components = [
+    "Button",
+    "Counter",
+    "LoginForm",
+    "TodoList",
+    "Timer",
+    "Tabs",
+    "ImageGallery",
+    "Dropdown",
+  ];
 
   const handleSelectComponent = (component) => {
     console.log("Selected component:", component);
@@ -28,6 +38,7 @@ function App() {
     Timer: <Timer />,
     Tabs: <Tabs />,
     ImageGallery: <ImageGallery />,
+    Dropdown: <Dropdown />,
   };
 
   return (
