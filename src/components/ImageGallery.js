@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 const ImageGallery = () => {
   const [images, setImages] = useState([]);
@@ -6,7 +6,9 @@ const ImageGallery = () => {
 
   useEffect(() => {
     const generateRandomImageUrl = () => {
-      return `https://source.unsplash.com/random/400x300?sig=${Math.floor(Math.random() * 1000)}`;
+      return `https://source.unsplash.com/random/400x300?sig=${Math.floor(
+        Math.random() * 1000
+      )}`;
     };
 
     const generateRandomImages = () => {
@@ -23,28 +25,32 @@ const ImageGallery = () => {
 
   const openModal = (image) => {
     setSelectedImage(image);
-    console.log('Selected image:', image);
+    console.log("Selected image:", image);
   };
 
   const closeModal = () => {
     setSelectedImage(null);
   };
 
+  const imageItems = images.map((image) => (
+    <div key={image.id} className="image-item" onClick={() => openModal(image)}>
+      <img src={image.thumbnail} alt={`Thumbnail ${image.id}`} />
+    </div>
+  ));
+
+  const modal = selectedImage ? (
+    <div className="modal" onClick={closeModal}>
+      <div className="modal-content">
+        <span className="close" onClick={closeModal}>&times;</span>
+        <img src={selectedImage.fullSize} alt={`Full-size ${selectedImage.id}`} />
+      </div>
+    </div>
+  ) : null;
+
   return (
     <div className="image-gallery">
-      {images.map((image) => (
-        <div key={image.id} className="image-item" onClick={() => openModal(image)}>
-          <img src={image.thumbnail} alt={`Thumbnail ${image.id}`} />
-        </div>
-      ))}
-      {selectedImage && (
-        <div className="modal" onClick={closeModal}>
-          <div className="modal-content">
-            <span className="close" onClick={closeModal}>&times;</span>
-            <img src={selectedImage.fullSize} alt={`Full-size ${selectedImage.id}`} />
-          </div>
-        </div>
-      )}
+      {imageItems}
+      {modal}
     </div>
   );
 };
