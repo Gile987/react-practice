@@ -10,6 +10,7 @@ import Timer from "./components/Timer";
 import Tabs from "./components/Tabs";
 import ImageGallery from "./components/ImageGallery";
 import Dropdown from "./components/Dropdown";
+import Accordion from "./components/Accordion";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
     "Tabs",
     "ImageGallery",
     "Dropdown",
+    "Accordion",
   ];
 
   const handleSelectComponent = (component) => {
@@ -39,6 +41,7 @@ function App() {
     Tabs: <Tabs />,
     ImageGallery: <ImageGallery />,
     Dropdown: <Dropdown />,
+    Accordion: <Accordion />,
   };
 
   return (
