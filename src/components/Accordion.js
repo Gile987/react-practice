@@ -21,6 +21,16 @@ const Accordion = () => {
     },
   ];
 
+  /*
+  We can also use useCallback to memoize the function and prevent unnecessary re-renders.
+
+  const toggleAccordion = useCallback((index) => {
+    setActiveIndex(activeIndex === index ? null : index);
+  }, [activeIndex]);
+  
+  The function will only be re-created when the activeIndex changes.
+  */
+
   const toggleAccordion = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
