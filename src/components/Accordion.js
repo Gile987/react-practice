@@ -29,7 +29,8 @@ const Accordion = () => {
   }, [activeIndex]);
 
   The function will only be re-created when the activeIndex changes.
-  P.s. useCallback is not necessary in this case, but it's good to know about it.
+  P.s. useCallback is not necessary in this case, because we use only one state variable in the function, and
+  the function is not passed as a prop to other components.
   */
 
   const toggleAccordion = (index) => {
