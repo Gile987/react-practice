@@ -1,4 +1,51 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
+import { styled } from '@mui/system';
+
+const ImageGalleryWrapper = styled('div')({
+  display: 'flex',
+  justifyContent: 'space-around',
+  flexWrap: 'wrap',
+});
+
+const ImageItem = styled('div')({
+  cursor: 'pointer',
+  margin: '0.625rem',
+});
+
+const Image = styled('img')({
+  width: '9.375rem',
+  height: 'auto',
+});
+
+const ModalImage = styled('img')({
+  width: 'auto',
+  height: 'auto',
+  maxWidth: '90%',
+  maxHeight: '90%',
+});
+
+const Modal = styled('div')({
+  position: 'fixed',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+});
+
+const ModalContent = styled('div')({
+  backgroundColor: 'white',
+  padding: '1.25rem',
+});
+
+const CloseButton = styled('span')({
+  cursor: 'pointer',
+  float: 'right',
+  fontSize: '1.25rem',
+});
 
 const ImageGallery = () => {
   const [images, setImages] = useState([]);
@@ -6,9 +53,7 @@ const ImageGallery = () => {
 
   useEffect(() => {
     const generateRandomImageUrl = () => {
-      return `https://source.unsplash.com/random/400x300?sig=${Math.floor(
-        Math.random() * 1000
-      )}`;
+      return `https://source.unsplash.com/random/400x300?sig=${Math.floor(Math.random() * 1000)}`;
     };
 
     const generateRandomImages = () => {
@@ -25,7 +70,6 @@ const ImageGallery = () => {
 
   const openModal = (image) => {
     setSelectedImage(image);
-    console.log("Selected image:", image);
   };
 
   const closeModal = () => {
@@ -33,25 +77,25 @@ const ImageGallery = () => {
   };
 
   const imageItems = images.map((image) => (
-    <div key={image.id} className="image-item" onClick={() => openModal(image)}>
-      <img src={image.thumbnail} alt={`Thumbnail ${image.id}`} />
-    </div>
+    <ImageItem key={image.id} onClick={() => openModal(image)}>
+      <Image src={image.thumbnail} alt={`Thumbnail ${image.id}`} />
+    </ImageItem>
   ));
 
   const modal = selectedImage ? (
-    <div className="modal" onClick={closeModal}>
-      <div className="modal-content">
-        <span className="close" onClick={closeModal}>&times;</span>
-        <img src={selectedImage.fullSize} alt={`Full-size ${selectedImage.id}`} />
-      </div>
-    </div>
+    <Modal onClick={closeModal}>
+      <ModalContent>
+        <CloseButton onClick={closeModal}>&times;</CloseButton>
+        <ModalImage src={selectedImage.fullSize} alt={`Full-size ${selectedImage.id}`} />
+      </ModalContent>
+    </Modal>
   ) : null;
 
   return (
-    <div className="image-gallery">
+    <ImageGalleryWrapper>
       {imageItems}
       {modal}
-    </div>
+    </ImageGalleryWrapper>
   );
 };
 
