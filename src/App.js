@@ -12,6 +12,7 @@ import ImageGallery from "./components/ImageGallery";
 import Dropdown from "./components/Dropdown";
 import Accordion from "./components/Accordion";
 import ContactForm from "./components/ContactForm";
+import WeatherWidget from "./components/WeatherWidget";
 import "./App.css";
 
 function App() {
@@ -26,7 +27,8 @@ function App() {
     "ImageGallery",
     "Dropdown",
     "Accordion",
-    "ContactForm"
+    "ContactForm",
+    "WeatherWidget",
   ];
 
   const handleSelectComponent = (component) => {
@@ -44,7 +46,8 @@ function App() {
     ImageGallery: <ImageGallery />,
     Dropdown: <Dropdown />,
     Accordion: <Accordion />,
-    ContactForm: <ContactForm />
+    ContactForm: <ContactForm />,
+    WeatherWidget: <WeatherWidget />,
   };
 
   return (
