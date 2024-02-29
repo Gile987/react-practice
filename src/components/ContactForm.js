@@ -1,4 +1,48 @@
 import { useState } from "react";
+import { styled } from "@mui/material";
+
+const Form = styled('form')({
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1rem',
+  backgroundColor: 'lightgray',
+});
+
+const Label = styled('label')({
+  fontWeight: 'bold',
+  fontSize: '1.2rem',
+  margin: '0.5rem 0 0 0.5rem',
+});
+
+const Input = styled('input')({
+  padding: '0.5rem',
+  margin: '0 0.5rem 0 0.5rem',
+  border: '1px solid gray',
+});
+
+const TextArea = styled('textarea')({
+  padding: '0.5rem',
+  margin: '0.5rem',
+  border: '1px solid gray',
+});
+
+const Button = styled('button')({
+  padding: '0.5rem',
+  margin: '0.5rem',
+  backgroundColor: 'blue',
+  color: 'white',
+  border: 'none',
+  cursor: 'pointer',
+  maxWidth: 'fit-content',
+});
+
+const SubmittedMessage = styled('div')({
+  marginTop: '1rem',
+  padding: '1rem',
+  border: '1px solid green',
+  borderRadius: '5px',
+  backgroundColor: '#f0f0f0',
+});
 
 const ContactForm = () => {
   const [name, setName] = useState("");
@@ -16,7 +60,7 @@ const ContactForm = () => {
       setEmail("");
       setMessage("");
       setIsSubmitted(false);
-    }, 2000);
+    }, 4000);
   };
 
   /*
@@ -31,52 +75,40 @@ const ContactForm = () => {
   */
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="name">Name:</label>
-      <input
+    <Form onSubmit={handleSubmit}>
+      <Label htmlFor="name">Name:</Label>
+      <Input
         type="text"
         id="name"
         value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-          console.log("Name:", name);
-        }}
+        onChange={(e) => setName(e.target.value)}
         required
       />
-      <br />
-      <label htmlFor="email">Email:</label>
-      <input
+      <Label htmlFor="email">Email:</Label>
+      <Input
         type="email"
         id="email"
         value={email}
-        onChange={(e) => {
-          setEmail(e.target.value);
-          console.log("Email:", email);
-        }}
+        onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <br />
-      <label htmlFor="message">Message:</label>
-      <textarea
+      <Label htmlFor="message">Message:</Label>
+      <TextArea
         id="message"
         value={message}
-        onChange={(e) => {
-          setMessage(e.target.value);
-          console.log("Message:", message);
-        }}
+        onChange={(e) => setMessage(e.target.value)}
         required
       />
-      <br />
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
       {isSubmitted && (
-        <div>
+        <SubmittedMessage>
           <p>Thank you, {name}!</p>
           <p>Your email is: {email}</p>
           <p>You entered the following message:</p>
           <p>{message}</p>
-        </div>
+        </SubmittedMessage>
       )}
-    </form>
+    </Form>
   );
 };
 
