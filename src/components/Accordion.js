@@ -1,4 +1,27 @@
 import { useState } from "react";
+import { styled } from "@mui/material";
+
+const AccordionWrapper = styled('div')({
+  backgroundColor: 'lightgray',
+  padding: '1rem',
+});
+
+const AccordionItem = styled('div')({
+  marginBottom: '1rem',
+  backgroundColor: 'white',
+});
+
+const AccordionTitle = styled('div')({
+  fontWeight: 'bold',
+  cursor: 'pointer',
+  padding: '1rem',
+
+});
+
+const AccordionContent = styled('div')({
+  paddingLeft: '1rem',
+  paddingBottom: '1rem',
+});
 
 const Accordion = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -38,20 +61,17 @@ const Accordion = () => {
   };
 
   const accordionItems = items.map((item) => (
-    <div key={item.id} className="accordion-item">
-      <div
-        className={`accordion-title ${activeIndex === item.id ? "active" : ""}`}
-        onClick={() => toggleAccordion(item.id)}
-      >
+    <AccordionItem key={item.id}>
+      <AccordionTitle onClick={() => toggleAccordion(item.id)}>
         {item.title}
-      </div>
+      </AccordionTitle>
       {activeIndex === item.id && (
-        <div className="accordion-content">{item.content}</div>
+        <AccordionContent>{item.content}</AccordionContent>
       )}
-    </div>
+    </AccordionItem>
   ));
 
-  return <div className="accordion">{accordionItems}</div>;
+  return <AccordionWrapper>{accordionItems}</AccordionWrapper>;
 };
 
 export default Accordion;
