@@ -11,6 +11,7 @@ import Tabs from "./components/Tabs";
 import ImageGallery from "./components/ImageGallery";
 import Dropdown from "./components/Dropdown";
 import Accordion from "./components/Accordion";
+import ContactForm from "./components/ContactForm";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
     "ImageGallery",
     "Dropdown",
     "Accordion",
+    "ContactForm"
   ];
 
   const handleSelectComponent = (component) => {
@@ -42,6 +44,7 @@ function App() {
     ImageGallery: <ImageGallery />,
     Dropdown: <Dropdown />,
     Accordion: <Accordion />,
+    ContactForm: <ContactForm />
   };
 
   return (
