@@ -35,6 +35,7 @@ const WeatherWidget = () => {
   }, [inputLocation]);
 
   const handleSubmit = (event) => {
+    setWeatherData(null);
     event.preventDefault();
     const inputValue = event.target.elements.location.value;
     if (inputValue !== inputLocation) {
