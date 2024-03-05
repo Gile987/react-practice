@@ -1,6 +1,22 @@
 import { useState } from "react";
 import { styled } from "@mui/system";
 
+const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const Container = styled("div")({
   textAlign: "center",
 });
@@ -63,7 +79,6 @@ const Calendar = () => {
     return days;
   };
 
-  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInMonth = getDaysInMonth();
 
   const handleMonthChange = (e) => {
@@ -93,22 +108,15 @@ const Calendar = () => {
 
   return (
     <Container>
-      <Header>{`${
-        currentDate.getMonth() + 1
-      }/${currentDate.getFullYear()}`}</Header>
+      <Header>
+        {`${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`}
+      </Header>
       <Select value={currentDate.getMonth()} onChange={handleMonthChange}>
-        <option value={0}>January</option>
-        <option value={1}>February</option>
-        <option value={2}>March</option>
-        <option value={3}>April</option>
-        <option value={4}>May</option>
-        <option value={5}>June</option>
-        <option value={6}>July</option>
-        <option value={7}>August</option>
-        <option value={8}>September</option>
-        <option value={9}>October</option>
-        <option value={10}>November</option>
-        <option value={11}>December</option>
+        {months.map((month, index) => (
+          <option key={month} value={index}>
+            {month}
+          </option>
+        ))}
       </Select>
       <GridContainer>
         {daysOfWeek.map((day) => (
@@ -128,17 +136,16 @@ const Calendar = () => {
           </DayContainer>
         ))}
       </GridContainer>
-      {selectedDate && (
+      {selectedDate ? (
         <div>
           <p>
             Selected Date:{" "}
-            {selectedDate &&
-              `${selectedDate}/${
-                currentDate.getMonth() + 1
-              }/${currentDate.getFullYear()}`}
+            {`${selectedDate}/${
+              currentDate.getMonth() + 1
+            }/${currentDate.getFullYear()}`}
           </p>
         </div>
-      )}
+      ) : null}
     </Container>
   );
 };
