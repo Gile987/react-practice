@@ -13,6 +13,7 @@ import Dropdown from "./components/Dropdown";
 import Accordion from "./components/Accordion";
 import ContactForm from "./components/ContactForm";
 import WeatherWidget from "./components/WeatherWidget";
+import Calendar from "./components/Calendar";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     "Accordion",
     "ContactForm",
     "WeatherWidget",
+    "Calendar",
   ];
 
   const handleSelectComponent = (component) => {
@@ -48,6 +50,7 @@ function App() {
     Accordion: <Accordion />,
     ContactForm: <ContactForm />,
     WeatherWidget: <WeatherWidget />,
+    Calendar: <Calendar />,
   };
 
   return (
