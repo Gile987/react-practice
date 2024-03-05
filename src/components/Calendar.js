@@ -1,32 +1,40 @@
-import { useState } from 'react';
-import { styled } from '@mui/system';
+import { useState } from "react";
+import { styled } from "@mui/system";
 
-const Container = styled('div')({
-  textAlign: 'center',
+const Container = styled("div")({
+  textAlign: "center",
 });
 
-const Header = styled('h2')({
-  marginBottom: '10px',
+const Header = styled("h2")({
+  marginBottom: "10px",
 });
 
-const Select = styled('select')({
-  marginBottom: '10px',
+const Select = styled("select")({
+  marginBottom: "10px",
 });
 
-const GridContainer = styled('div')({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(7, 1fr)',
-  gap: '5px',
+const GridContainer = styled("div")({
+  display: "grid",
+  gridTemplateColumns: "repeat(7, 1fr)",
+  gap: "5px",
 });
 
-const DayContainer = styled('div')({
-  border: '1px solid #ccc',
-  padding: '5px',
-  textAlign: 'center',
+const DayContainer = styled("div")({
+  border: "1px solid #ccc",
+  padding: "5px",
+  textAlign: "center",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#f0ff22",
+  },
+  "&.calendar-day.clicked": {
+    backgroundColor: "#f02f22",
+  },
 });
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const getDaysInMonth = () => {
     const year = currentDate.getFullYear();
@@ -47,7 +55,7 @@ const Calendar = () => {
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const endingDayOfWeek = lastDayOfMonth.getDay();
     const numEmptyCells = 6 - endingDayOfWeek;
-    
+
     for (let i = 0; i < numEmptyCells; i++) {
       days.push(null);
     }
@@ -55,13 +63,22 @@ const Calendar = () => {
     return days;
   };
 
-  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const daysInMonth = getDaysInMonth();
 
   const handleMonthChange = (e) => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(parseInt(e.target.value));
-    setCurrentDate(newDate);
+    try {
+      const month = parseInt(e.target.value);
+      if (month < 0 || month > 11) {
+        throw new Error("Month must be between 0 (January) and 11 (December).");
+      }
+      const newDate = new Date(currentDate);
+      newDate.setMonth(month);
+      setCurrentDate(newDate);
+      setSelectedDate(null);
+    } catch (error) {
+      console.error("An error occurred when changing the month:", error);
+    }
   };
 
   const getKeyForDay = (day) => {
@@ -70,9 +87,15 @@ const Calendar = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const handleDayClick = (day) => {
+    setSelectedDate(day);
+  };
+
   return (
     <Container>
-      <Header>{`${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`}</Header>
+      <Header>{`${
+        currentDate.getMonth() + 1
+      }/${currentDate.getFullYear()}`}</Header>
       <Select value={currentDate.getMonth()} onChange={handleMonthChange}>
         <option value={0}>January</option>
         <option value={1}>February</option>
@@ -92,11 +115,30 @@ const Calendar = () => {
           <DayContainer key={day}>{day}</DayContainer>
         ))}
         {daysInMonth.map((dayInfo, index) => (
-          <DayContainer key={getKeyForDay(index)}>
+          <DayContainer
+            key={getKeyForDay(index)}
+            onClick={() => handleDayClick(dayInfo ? dayInfo.day : null)}
+            className={
+              dayInfo && selectedDate === dayInfo.day
+                ? "calendar-day clicked"
+                : "calendar-day empty"
+            }
+          >
             {dayInfo && <div>{dayInfo.day}</div>}
           </DayContainer>
         ))}
       </GridContainer>
+      {selectedDate && (
+        <div>
+          <p>
+            Selected Date:{" "}
+            {selectedDate &&
+              `${selectedDate}/${
+                currentDate.getMonth() + 1
+              }/${currentDate.getFullYear()}`}
+          </p>
+        </div>
+      )}
     </Container>
   );
 };
