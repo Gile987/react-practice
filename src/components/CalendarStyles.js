@@ -1,15 +1,21 @@
-import { styled } from "@mui/system";
+import { styled, keyframes } from "@mui/system";
+
+const pulse = keyframes`
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+`;
 
 export const Container = styled("div")({
   textAlign: "center",
   backgroundColor: "#121212",
   color: "#0ff",
-  padding: "20px",
-  borderRadius: "10px",
+  padding: "1.25rem",
+  borderRadius: "0.625rem",
 });
 
 export const Header = styled("h2")({
-  marginBottom: "10px",
+  marginBottom: "0.625rem",
   color: "#0ff",
 });
 
@@ -18,19 +24,19 @@ export const Select = styled("select")({
   backgroundColor: "#222",
   color: "#0ff",
   border: "none",
-  padding: "5px",
-  borderRadius: "5px",
+  padding: "0.3125rem",
+  borderRadius: "0.3125rem",
 });
 
 export const GridContainer = styled("div")({
   display: "grid",
   gridTemplateColumns: "repeat(7, 1fr)",
-  gap: "5px",
+  gap: "0.3125rem",
 });
 
 export const DayContainer = styled("div")(({ month, currentMonth }) => ({
   border: "1px solid #0ff",
-  padding: "5px",
+  padding: "0.3125rem",
   textAlign: "center",
   cursor: "pointer",
   backgroundColor: month === currentMonth ? "#222" : "#111",
@@ -47,6 +53,33 @@ export const DayContainer = styled("div")(({ month, currentMonth }) => ({
 
 export const DayNameContainer = styled("div")({
   border: "1px solid #0ff",
-  padding: "5px",
+  padding: "0.3125rem",
   textAlign: "center",
+});
+
+export const ArrowButton = styled("button")({
+  backgroundColor: "#222",
+  color: "#0ff",
+  border: "1px solid #0ff",
+  borderRadius: "5px",
+  padding: "0.3125rem",
+  marginLeft: "0.3125rem",
+  marginRight: "0.3125rem",
+  cursor: "pointer",
+  transition: 'transform 0.5s',
+  '&:hover': {
+    animation: `${pulse} 0.5s ease-in-out infinite`,
+  },
+});
+
+export const SelectedDateContainer = styled("div")({
+  backgroundColor: "#222",
+  color: "#0ff",
+  padding: "0.3125rem",
+  borderRadius: "0.3125rem",
+  margin: "0.625rem 1rem",
+});
+
+export const SelectedDateText = styled("p")({
+  margin: 0,
 });

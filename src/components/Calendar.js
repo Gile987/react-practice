@@ -6,6 +6,9 @@ import {
   GridContainer,
   DayNameContainer,
   DayContainer,
+  ArrowButton,
+  SelectedDateContainer,
+  SelectedDateText,
 } from "./CalendarStyles";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -68,7 +71,6 @@ const Calendar = () => {
       const newDate = new Date(currentDate);
       newDate.setMonth(month);
       setCurrentDate(newDate);
-      setSelectedDate(null);
     } catch (error) {
       console.error("An error occurred when changing the month:", error);
     }
@@ -82,11 +84,28 @@ const Calendar = () => {
     setSelectedDate(`${day}-${month + 1}-${currentDate.getFullYear()}`);
   };
 
+  const handlePrevMonth = () => {
+    const newDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() - 1
+    );
+    setCurrentDate(newDate);
+  };
+
+  const handleNextMonth = () => {
+    const newDate = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth() + 1
+    );
+    setCurrentDate(newDate);
+  };
+
   return (
     <Container>
       <Header>
         {`${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`}
       </Header>
+      <ArrowButton onClick={handlePrevMonth}>Prev</ArrowButton>
       <Select value={currentDate.getMonth()} onChange={handleMonthChange}>
         {months.map((month, index) => (
           <option key={month} value={index}>
@@ -94,6 +113,7 @@ const Calendar = () => {
           </option>
         ))}
       </Select>
+      <ArrowButton onClick={handleNextMonth}>Next</ArrowButton>
       <GridContainer>
         {daysOfWeek.map((day) => (
           <DayNameContainer key={day}>{day}</DayNameContainer>
@@ -109,7 +129,10 @@ const Calendar = () => {
             }
             className={
               dayInfo &&
-              selectedDate === `${dayInfo.day}-${dayInfo.month + 1}-${currentDate.getFullYear()}` &&
+              selectedDate ===
+                `${dayInfo.day}-${
+                  dayInfo.month + 1
+                }-${currentDate.getFullYear()}` &&
               dayInfo.month === currentDate.getMonth()
                 ? "calendar-day clicked"
                 : ""
@@ -122,14 +145,14 @@ const Calendar = () => {
         ))}
       </GridContainer>
       {selectedDate ? (
-        <div>
-          <p>
+        <SelectedDateContainer>
+          <SelectedDateText>
             Selected Date:{" "}
             {selectedDate
               ? selectedDate.split("-").join("/")
               : "No date selected"}
-          </p>
-        </div>
+          </SelectedDateText>
+        </SelectedDateContainer>
       ) : null}
     </Container>
   );
