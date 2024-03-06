@@ -80,27 +80,27 @@ const Calendar = () => {
     const numDays = new Date(year, month + 1, 0).getDate();
     const days = [];
 
-    console.log('startingDayOfWeek', startingDayOfWeek);
+    console.log("startingDayOfWeek", startingDayOfWeek);
 
     for (let i = 1; i <= numDays; i++) {
       days.push({ day: i, month: month });
     }
-    console.log('days', days)
+    console.log("days", days);
 
     const numDaysPrevMonth = new Date(year, month, 0).getDate();
-    console.log('numDaysPrevMonth', numDaysPrevMonth);
+    console.log("numDaysPrevMonth", numDaysPrevMonth);
 
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.unshift({ day: numDaysPrevMonth - i, month: month - 1 })
+      days.unshift({ day: numDaysPrevMonth - i, month: month - 1 });
     }
 
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const endingDayOfWeek = lastDayOfMonth.getDay();
     const numEmptyCells = 6 - endingDayOfWeek;
-    console.log('numEmptyCells', numEmptyCells)
+    console.log("numEmptyCells", numEmptyCells);
 
     for (let i = 0; i < numEmptyCells; i++) {
-      days.push({ day: i + 1, month: month + 1 })
+      days.push({ day: i + 1, month: month + 1 });
     }
 
     return days;
@@ -143,21 +143,28 @@ const Calendar = () => {
         {daysOfWeek.map((day) => (
           <DayNameContainer key={day}>{day}</DayNameContainer>
         ))}
-        {daysInMonth.map((dayInfo, index) => (
-  <DayContainer
-    key={`${currentDate.getFullYear()}-${dayInfo.month}-${dayInfo.day}`}
-    onClick={() => handleDayClick(dayInfo ? dayInfo.day : null, dayInfo ? dayInfo.month : null)}
-    className={
-      dayInfo && selectedDate === dayInfo.day && dayInfo.month === currentDate.getMonth()
-        ? "calendar-day clicked"
-        : ""
-    }
-    month={dayInfo ? dayInfo.month : null}
-    currentMonth={currentDate.getMonth()}
-  >
-    {dayInfo && <div>{dayInfo.day}</div>}
-  </DayContainer>
-))}
+        {daysInMonth.map((dayInfo) => (
+          <DayContainer
+            key={`${currentDate.getFullYear()}-${dayInfo.month}-${dayInfo.day}`}
+            onClick={() =>
+              handleDayClick(
+                dayInfo ? dayInfo.day : null,
+                dayInfo ? dayInfo.month : null
+              )
+            }
+            className={
+              dayInfo &&
+              selectedDate === dayInfo.day &&
+              dayInfo.month === currentDate.getMonth()
+                ? "calendar-day clicked"
+                : ""
+            }
+            month={dayInfo ? dayInfo.month : null}
+            currentMonth={currentDate.getMonth()}
+          >
+            {dayInfo && <div>{dayInfo.day}</div>}
+          </DayContainer>
+        ))}
       </GridContainer>
       {selectedDate ? (
         <div>
