@@ -19,14 +19,24 @@ const months = [
 
 const Container = styled("div")({
   textAlign: "center",
+  backgroundColor: "#121212",
+  color: "#0ff",
+  padding: "20px",
+  borderRadius: "10px",
 });
 
 const Header = styled("h2")({
   marginBottom: "10px",
+  color: "#0ff",
 });
 
 const Select = styled("select")({
   marginBottom: "10px",
+  backgroundColor: "#222",
+  color: "#0ff",
+  border: "none",
+  padding: "5px",
+  borderRadius: "5px",
 });
 
 const GridContainer = styled("div")({
@@ -35,17 +45,27 @@ const GridContainer = styled("div")({
   gap: "5px",
 });
 
-const DayContainer = styled("div")({
-  border: "1px solid #ccc",
+const DayContainer = styled("div")(({ month, currentMonth }) => ({
+  border: "1px solid #0ff",
   padding: "5px",
   textAlign: "center",
   cursor: "pointer",
+  backgroundColor: month === currentMonth ? "#222" : "#111",
+  color: month === currentMonth ? "#0ff" : "#999",
   "&:hover": {
-    backgroundColor: "#f0ff22",
+    backgroundColor: month === currentMonth ? "#0ff" : "#bbb",
+    color: "#121212",
   },
   "&.calendar-day.clicked": {
-    backgroundColor: "#f02f22",
+    backgroundColor: "#FF69B4",
+    color: "#121212",
   },
+}));
+
+const DayNameContainer = styled("div")({
+  border: "1px solid #0ff",
+  padding: "5px",
+  textAlign: "center",
 });
 
 const Calendar = () => {
@@ -60,20 +80,27 @@ const Calendar = () => {
     const numDays = new Date(year, month + 1, 0).getDate();
     const days = [];
 
+    console.log('startingDayOfWeek', startingDayOfWeek);
+
     for (let i = 1; i <= numDays; i++) {
-      days.push({ day: i });
+      days.push({ day: i, month: month });
     }
+    console.log('days', days)
+
+    const numDaysPrevMonth = new Date(year, month, 0).getDate();
+    console.log('numDaysPrevMonth', numDaysPrevMonth);
 
     for (let i = 0; i < startingDayOfWeek; i++) {
-      days.unshift(null);
+      days.unshift({ day: numDaysPrevMonth - i, month: month - 1 })
     }
 
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const endingDayOfWeek = lastDayOfMonth.getDay();
     const numEmptyCells = 6 - endingDayOfWeek;
+    console.log('numEmptyCells', numEmptyCells)
 
     for (let i = 0; i < numEmptyCells; i++) {
-      days.push(null);
+      days.push({ day: i + 1, month: month + 1 })
     }
 
     return days;
@@ -120,21 +147,23 @@ const Calendar = () => {
       </Select>
       <GridContainer>
         {daysOfWeek.map((day) => (
-          <DayContainer key={day}>{day}</DayContainer>
+          <DayNameContainer key={day}>{day}</DayNameContainer>
         ))}
         {daysInMonth.map((dayInfo, index) => (
-          <DayContainer
-            key={getKeyForDay(index)}
-            onClick={() => handleDayClick(dayInfo ? dayInfo.day : null)}
-            className={
-              dayInfo && selectedDate === dayInfo.day
-                ? "calendar-day clicked"
-                : "calendar-day empty"
-            }
-          >
-            {dayInfo && <div>{dayInfo.day}</div>}
-          </DayContainer>
-        ))}
+  <DayContainer
+    key={getKeyForDay(index)}
+    onClick={() => handleDayClick(dayInfo ? dayInfo.day : null, dayInfo ? dayInfo.month : null)}
+    className={
+      dayInfo && selectedDate === dayInfo.day && dayInfo.month === currentDate.getMonth()
+        ? "calendar-day clicked"
+        : ""
+    }
+    month={dayInfo ? dayInfo.month : null}
+    currentMonth={currentDate.getMonth()}
+  >
+    {dayInfo && <div>{dayInfo.day}</div>}
+  </DayContainer>
+))}
       </GridContainer>
       {selectedDate ? (
         <div>
