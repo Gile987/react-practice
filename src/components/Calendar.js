@@ -123,12 +123,6 @@ const Calendar = () => {
     }
   };
 
-  const getKeyForDay = (day) => {
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    return `${year}-${month}-${day}`;
-  };
-
   const handleDayClick = (day) => {
     setSelectedDate(day);
   };
@@ -151,7 +145,7 @@ const Calendar = () => {
         ))}
         {daysInMonth.map((dayInfo, index) => (
   <DayContainer
-    key={getKeyForDay(index)}
+    key={`${currentDate.getFullYear()}-${dayInfo.month}-${dayInfo.day}`}
     onClick={() => handleDayClick(dayInfo ? dayInfo.day : null, dayInfo ? dayInfo.month : null)}
     className={
       dayInfo && selectedDate === dayInfo.day && dayInfo.month === currentDate.getMonth()
