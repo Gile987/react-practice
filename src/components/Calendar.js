@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { styled } from "@mui/system";
+import {
+  Container,
+  Header,
+  Select,
+  GridContainer,
+  DayNameContainer,
+  DayContainer,
+} from "./CalendarStyles";
 
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const months = [
@@ -17,57 +24,6 @@ const months = [
   "December",
 ];
 
-const Container = styled("div")({
-  textAlign: "center",
-  backgroundColor: "#121212",
-  color: "#0ff",
-  padding: "20px",
-  borderRadius: "10px",
-});
-
-const Header = styled("h2")({
-  marginBottom: "10px",
-  color: "#0ff",
-});
-
-const Select = styled("select")({
-  marginBottom: "10px",
-  backgroundColor: "#222",
-  color: "#0ff",
-  border: "none",
-  padding: "5px",
-  borderRadius: "5px",
-});
-
-const GridContainer = styled("div")({
-  display: "grid",
-  gridTemplateColumns: "repeat(7, 1fr)",
-  gap: "5px",
-});
-
-const DayContainer = styled("div")(({ month, currentMonth }) => ({
-  border: "1px solid #0ff",
-  padding: "5px",
-  textAlign: "center",
-  cursor: "pointer",
-  backgroundColor: month === currentMonth ? "#222" : "#111",
-  color: month === currentMonth ? "#0ff" : "#999",
-  "&:hover": {
-    backgroundColor: month === currentMonth ? "#0ff" : "#bbb",
-    color: "#121212",
-  },
-  "&.calendar-day.clicked": {
-    backgroundColor: "#FF69B4",
-    color: "#121212",
-  },
-}));
-
-const DayNameContainer = styled("div")({
-  border: "1px solid #0ff",
-  padding: "5px",
-  textAlign: "center",
-});
-
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedDate, setSelectedDate] = useState(null);
@@ -80,15 +36,11 @@ const Calendar = () => {
     const numDays = new Date(year, month + 1, 0).getDate();
     const days = [];
 
-    console.log("startingDayOfWeek", startingDayOfWeek);
-
     for (let i = 1; i <= numDays; i++) {
       days.push({ day: i, month: month });
     }
-    console.log("days", days);
 
     const numDaysPrevMonth = new Date(year, month, 0).getDate();
-    console.log("numDaysPrevMonth", numDaysPrevMonth);
 
     for (let i = 0; i < startingDayOfWeek; i++) {
       days.unshift({ day: numDaysPrevMonth - i, month: month - 1 });
@@ -97,7 +49,6 @@ const Calendar = () => {
     const lastDayOfMonth = new Date(year, month + 1, 0);
     const endingDayOfWeek = lastDayOfMonth.getDay();
     const numEmptyCells = 6 - endingDayOfWeek;
-    console.log("numEmptyCells", numEmptyCells);
 
     for (let i = 0; i < numEmptyCells; i++) {
       days.push({ day: i + 1, month: month + 1 });
@@ -123,8 +74,12 @@ const Calendar = () => {
     }
   };
 
-  const handleDayClick = (day) => {
-    setSelectedDate(day);
+  const handleDayClick = (day, month) => {
+    if (month !== currentDate.getMonth()) {
+      const newDate = new Date(currentDate.getFullYear(), month, day);
+      setCurrentDate(newDate);
+    }
+    setSelectedDate(`${day}-${month + 1}-${currentDate.getFullYear()}`);
   };
 
   return (
@@ -154,7 +109,7 @@ const Calendar = () => {
             }
             className={
               dayInfo &&
-              selectedDate === dayInfo.day &&
+              selectedDate === `${dayInfo.day}-${dayInfo.month + 1}-${currentDate.getFullYear()}` &&
               dayInfo.month === currentDate.getMonth()
                 ? "calendar-day clicked"
                 : ""
@@ -162,7 +117,7 @@ const Calendar = () => {
             month={dayInfo ? dayInfo.month : null}
             currentMonth={currentDate.getMonth()}
           >
-            {dayInfo && <div>{dayInfo.day}</div>}
+            {dayInfo ? <div>{dayInfo.day}</div> : null}
           </DayContainer>
         ))}
       </GridContainer>
@@ -170,9 +125,9 @@ const Calendar = () => {
         <div>
           <p>
             Selected Date:{" "}
-            {`${selectedDate}/${
-              currentDate.getMonth() + 1
-            }/${currentDate.getFullYear()}`}
+            {selectedDate
+              ? selectedDate.split("-").join("/")
+              : "No date selected"}
           </p>
         </div>
       ) : null}
