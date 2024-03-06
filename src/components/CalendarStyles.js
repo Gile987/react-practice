@@ -12,6 +12,7 @@ export const Container = styled("div")({
   color: "#0ff",
   padding: "1.25rem",
   borderRadius: "0.625rem",
+  height: "28.125rem",
 });
 
 export const Header = styled("h2")({
@@ -32,6 +33,7 @@ export const GridContainer = styled("div")({
   display: "grid",
   gridTemplateColumns: "repeat(7, 1fr)",
   gap: "0.3125rem",
+  height: "18.75rem",
 });
 
 export const DayContainer = styled("div")(({ month, currentMonth }) => ({
@@ -39,6 +41,7 @@ export const DayContainer = styled("div")(({ month, currentMonth }) => ({
   padding: "0.3125rem",
   textAlign: "center",
   cursor: "pointer",
+  height: "1.5rem",
   backgroundColor: month === currentMonth ? "#222" : "#111",
   color: month === currentMonth ? "#0ff" : "#999",
   "&:hover": {
@@ -55,6 +58,7 @@ export const DayNameContainer = styled("div")({
   border: "1px solid #0ff",
   padding: "0.3125rem",
   textAlign: "center",
+  height: "1.5rem",
 });
 
 export const ArrowButton = styled("button")({
