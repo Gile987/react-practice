@@ -2,7 +2,7 @@ import { styled } from '@mui/system';
 
 export const Wrapper = styled('div')({
   display: 'flex',
-  height: '20vh',
+  height: '25vh',
   gap: '0.625rem',
   padding: '0.625rem',
   backgroundColor: '#f5f5f5',
@@ -33,7 +33,7 @@ export const ColorControl = styled('div')({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '0.625rem',
+  margin: '0.625rem 0',
 });
 
 export const Label = styled('label')({
@@ -53,6 +53,7 @@ export const RgbaColor = styled('p')({
   fontSize: '1.2em',
   color: '#333',
   marginTop: '0',
+  marginBottom: '0.225rem',
 });
 
 export const Input = styled('input')({

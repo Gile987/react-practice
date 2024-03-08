@@ -12,13 +12,31 @@ import {
 
 const ColorPicker = () => {
   const [color, setColor] = useState({ red: 0, green: 0, blue: 0, alpha: 1 });
+  const [hexColor, setHexColor] = useState("#000000");
 
   const updateColor = (e) => {
-    setColor({
+    const updatedColor = {
       ...color,
       [e.target.name]: e.target.value,
-    });
+    };
+    
+    setColor(updatedColor);
+  
+    const hexColor = rgbToHex(updatedColor.red, updatedColor.green, updatedColor.blue);
+    setHexColor(hexColor);
   };
+
+  function rgbToHex(r, g, b) {
+    r = parseInt(r, 10).toString(16);
+    g = parseInt(g, 10).toString(16);
+    b = parseInt(b, 10).toString(16);
+  
+    if (r.length === 1) r = "0" + r;
+    if (g.length === 1) g = "0" + g;
+    if (b.length === 1) b = "0" + b;
+  
+    return "#" + r + g + b;
+  }
 
   const rgbaColor = `rgba(${color.red}, ${color.green}, ${color.blue}, ${color.alpha})`;
 
@@ -27,6 +45,7 @@ const ColorPicker = () => {
       <Controls>
         <SelectedColor>Selected Color:</SelectedColor>
         <RgbaColor>{rgbaColor}</RgbaColor>
+        <RgbaColor>{hexColor}</RgbaColor>
         {["red", "green", "blue"].map((colorName) => (
           <ColorControl key={colorName}>
             <Label>
