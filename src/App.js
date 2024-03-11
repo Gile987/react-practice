@@ -16,6 +16,7 @@ import WeatherWidget from "./components/WeatherWidget/WeatherWidget";
 import Calendar from "./components/Calendar/Calendar";
 import Slider from "./components/Slider/Slider";
 import ColorPicker from "./components/ColorPicker/ColorPicker";
+import VideoPlayer from "./components/VideoPlayer/VideoPlayer";
 import "./App.css";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
     "Calendar",
     "Slider",
     "ColorPicker",
+    "VideoPlayer"
   ];
 
   const handleSelectComponent = (component) => {
@@ -57,6 +59,7 @@ function App() {
     Calendar: <Calendar />,
     Slider: <Slider />,
     ColorPicker: <ColorPicker />,
+    VideoPlayer: <VideoPlayer />
   };
 
   return (
